@@ -14,8 +14,14 @@ folder = '/var/spool/sympa/subscribe/'
 
 time_lapse = int(parser.parse_args().time_lapse)
 
+print(f"Deleting requests with more than {time_lapse} hours")
+print("--------")
 files = [os.path.join(folder, filename) for filename in os.listdir(folder)]
 for filename in files:
     hs_lapse = (now - os.stat(filename).st_mtime) / 3600
     if (filename.endswith('add')) and ( hs_lapse > time_lapse):
+        print('DELETE ' + filename)
         os.remove(filename)
+
+print("--------")
+print("Done")
